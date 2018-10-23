@@ -1,0 +1,99 @@
+<project name="notificationPipeline" default="dist" basedir=".">
+    <property name="dist.dir" value="dist"/>
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="classes"/>
+    <property name="lib.dir" value="lib"/> 
+	<property name="name" value="notificationPipeline"/>
+
+    <path id="master-classpath">
+        <fileset dir="${lib.dir}">
+           <include name="*.jar"/>        
+        </fileset>    	
+    </path>	
+	
+    <!-- Remove old build files -->
+	<target name="clean" description="Clean output directories">	    	
+        <delete failonerror="false">
+            <fileset dir="${build.dir}" includes="**/*.class"/>
+        </delete>
+        <delete dir="${dist.dir}" failonerror="false"/>
+	</target>
+
+    <!--Prepare for build -->
+    <target name="prepare" depends="clean" description="Prepare for build">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${lib.dir}"/>
+    	<mkdir dir="${dist.dir}"/>
+    </target>
+
+    <!-- Compile all of our class files -->
+    <target name="build" depends="prepare" description="Compile main source tree java files and build war file">
+        <javac destdir="${build.dir}" target="1.7" source="1.7"  debug="true"
+               deprecation="false" optimize="false" failonerror="true">
+            <src path="${src.dir}"/>
+            <classpath refid="master-classpath"/>
+        </javac>
+    </target>
+    
+    <!-- Compile all of our class files -->
+    <target name="dist" depends="build" description="build the distribution">
+        <mkdir dir="${dist.dir}/log"/>
+        <mkdir dir="${dist.dir}/lib"/>
+        <copy todir="${dist.dir}/lib">
+            <fileset dir="lib">
+            </fileset>
+        </copy>
+        <mkdir dir="${dist.dir}/bin"/>
+        <copy todir="${dist.dir}/bin">
+            <fileset dir="bin">
+            </fileset>
+        </copy>
+        <mkdir dir="${dist.dir}/properties"/>
+        <copy todir="${dist.dir}/properties">
+            <fileset dir="properties">
+            </fileset>
+        </copy>
+
+        <!-- automatically create manifest.file -->
+        <delete file="MANIFEST.FM"/>
+        <tstamp>
+           <format property="TODAY" pattern="yyyy-MM-dd HH:mm:ss" />
+        </tstamp>
+        <pathconvert property="mf.classpath" pathsep=" " dirsep="/">
+            <path refid="master-classpath" />
+            <chainedmapper>
+                <flattenmapper />
+                <globmapper from="*.jar" to="../lib/*.jar" />
+            </chainedmapper>
+        </pathconvert>
+        <manifest file="MANIFEST.FM">
+            <attribute name="Main-Class" value="edu.mcw.rgd.NotificationManager"/>
+            <attribute name="Built-By" value="${user.name}"/>
+            <attribute name="Built-Date" value="${TODAY}"/>
+            <attribute name="Class-Path" value="${mf.classpath}"/>
+        </manifest>
+        <jar destfile="${lib.dir}/${name}.jar" manifest="MANIFEST.FM">
+            <fileset dir="${build.dir}"/>
+        </jar>
+        <delete file="MANIFEST.FM"/>
+        <move todir="${dist.dir}/lib" file="${lib.dir}/${name}.jar"/>
+    </target>
+
+    <target name="dist+docs" depends="dist" description="build the distribution with javadoc">
+
+        <mkdir dir="docs"/>
+        <javadoc
+               destdir="docs/${name}"
+               author="true"
+               version="true"
+               use="true"
+               windowtitle="${name}">
+
+        <fileset dir="src" defaultexcludes="yes">
+        </fileset>
+      </javadoc>
+    </target>
+
+
+
+</project>
