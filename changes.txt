@@ -1,0 +1,5 @@
+Jan 09 2020
+  simplified master script; added debug cmdline param
+
+ver 2.0.0, Oct 1 2018
+  moved from subversion to github

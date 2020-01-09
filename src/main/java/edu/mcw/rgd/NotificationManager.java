@@ -1,21 +1,16 @@
 package edu.mcw.rgd;
 import com.sun.mail.smtp.SMTPTransport;
-import edu.mcw.rgd.dao.DataSourceFactory;
 import edu.mcw.rgd.dao.impl.*;
 import edu.mcw.rgd.datamodel.*;
-import edu.mcw.rgd.datamodel.annotation.Evidence;
 import edu.mcw.rgd.datamodel.myrgd.MyUser;
 import edu.mcw.rgd.datamodel.ontology.Annotation;
 import edu.mcw.rgd.datamodel.ontologyx.Aspect;
 import edu.mcw.rgd.process.Utils;
 import edu.mcw.rgd.reporting.Link;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 
 import javax.mail.Message;
-import javax.mail.MessagingException;
 import javax.mail.Session;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
@@ -26,19 +21,27 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Program to update OBJECT_SYMBOL(gene symbol) and OBJECT_NAME(gene name) in the FULL_ANNOT table
- * for all genes(not just rat genes) which have the same ANNOTATED_OBJECT_RGD_ID
- * with the RGD_ID field in the GENES table.
+ * Program to detect changes in RGD objects. The summary emails are then sent to MY_RGD users.
  * <p>
- * Added updates of symbols and names for strains and qtls - Feb 2013
+ * cmdline param 'debug=...' allows to test and send all notifications to one debug email
  */
 public class NotificationManager {
 
-    Log log = LogFactory.getLog("updates");
+    Logger log = Logger.getLogger("updates");
+
+    // if not null, all messages will be sent only to this email account
+    String debugEmail = null;
 
     public static void main(String[] args) throws Exception {
 
         NotificationManager manager = new NotificationManager();
+
+        for( String arg: args ) {
+            if( arg.startsWith("debug=") ) {
+                manager.debugEmail = arg.substring(6);
+                System.out.println("DEBUG MODE! All emails will be sent to "+manager.debugEmail);
+            }
+        }
 
         try {
 
@@ -231,27 +234,32 @@ public class NotificationManager {
             responseMsg.append("</td></tr></table>");
 
             if (!foundSomething) {
-                System.out.println("didn't find anything");
-            }
-
-
-            if (foundSomething) {
+                System.out.println("   didn't find anything");
+            } else {
+                // FOUND SOMETHING
 
                 MyUser u =  mdao.getMyUser(user);
 
-                //if (u.getUsername().equals("jdepons@mcw.edu")) {
+                if( debugEmail!=null ) {
+
+                    // DEBUG: override email address
                     if (u.isSendDigest()) {
-                        System.out.println("sending message");
-                        this.send(user, title, responseMsg.toString());
-
+                        this.send(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     }
-                    System.out.println("adding to db");
-                    mdao.insertMessageCenter(user, title, responseMsg.toString());
-                //}
-            }
+                    System.out.println("  adding to db");
+                    mdao.insertMessageCenter(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
+                    Thread.sleep(1111); // wait at least 1sec to avoid primary key violations in DB
 
-            //FileOutputStream fos = new FileOutputStream(new File("c:/tmp/test.html"));
-            //fos.write(responseMsg.toString().getBytes());
+                } else {
+
+                    // PROD
+                    if (u.isSendDigest()) {
+                        this.send(user, title, responseMsg.toString());
+                    }
+                    System.out.println("  adding to db");
+                    mdao.insertMessageCenter(user, title, responseMsg.toString());
+                }
+            }
 
         }
 
@@ -263,9 +271,7 @@ public class NotificationManager {
         List<Annotation> annots = adao.getAnnotations(rgdId,from,to, aspect);
         String msg = "";
 
-
         if (annots.size() > 0) {
-
 
             msg ="<tr><td colspan='3'><div style='background-color:#EFF1F0;margin-top:20px;font-weight:700;'>New " + Aspect.getFriendlyName(aspect) + " Annotations</div></td></tr>";
 
@@ -276,7 +282,6 @@ public class NotificationManager {
                 }else {
                     distinct.put(annot.getObjectSymbol() + "-" +annot.getTerm() + "-" + annot.getEvidence(), null);
                 }
-
 
                 msg += "<tr><td>" + annot.getTerm()+ "</td><td><a href='http://rgd.mcw.edu/rgdweb/report/annotation/main.html?term=" + annot.getTermAcc() + "&id=" + rgdId + "'>" + annot.getTermAcc() + "</a></td><td><span style='padding-left:10px;'>" +  annot.getEvidence() + "</span></td></tr>";
             }
@@ -603,7 +608,7 @@ public class NotificationManager {
 
     public static void send(String recipientEmail, String title, String message) throws Exception{
 
-        String smtpHost = "smtp.mcw.edu";
+        System.out.println("  sending message");
 
         // Get a Properties object
         Properties props = System.getProperties();
@@ -634,7 +639,5 @@ public class NotificationManager {
         t.sendMessage(msg, msg.getAllRecipients());
         t.close();
     }
-
-
 
 }
