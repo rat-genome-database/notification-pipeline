@@ -7,7 +7,8 @@ import edu.mcw.rgd.datamodel.ontology.Annotation;
 import edu.mcw.rgd.datamodel.ontologyx.Aspect;
 import edu.mcw.rgd.process.Utils;
 import edu.mcw.rgd.reporting.Link;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -27,7 +28,7 @@ import java.util.*;
  */
 public class NotificationManager {
 
-    Logger log = Logger.getLogger("updates");
+    Logger log = LogManager.getLogger("updates");
 
     // if not null, all messages will be sent only to this email account
     String debugEmail = null;
@@ -79,7 +80,6 @@ public class NotificationManager {
             out.close();
 
         } catch(Exception e) {
-            e.printStackTrace();
             Utils.printStackTrace(e, manager.log);
         }
     }

@@ -12,6 +12,6 @@ cd $APPDIR
 echo "   running on database [$1]"
 
 java -Dspring.config=$APPDIR/../properties/$1.xml \
-    -Dlog4j.configuration=file://$APPDIR/properties/log4j.properties \
+    -Dlog4j.configurationFile=file://$APPDIR/properties/log4j2.xml \
     -Dlocal.config=${PROPS_HOME}/notification.properties \
     -jar lib/$APPNAME.jar "$@"
