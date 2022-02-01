@@ -40,7 +40,7 @@ public class NotificationManager {
         for( String arg: args ) {
             if( arg.startsWith("debug=") ) {
                 manager.debugEmail = arg.substring(6);
-                System.out.println("DEBUG MODE! All emails will be sent to "+manager.debugEmail);
+                manager.log.warn("DEBUG MODE! All emails will be sent to "+manager.debugEmail);
             }
         }
 
@@ -95,7 +95,7 @@ public class NotificationManager {
 
         for (String user: users) {
 
-            System.out.println("running for " + user);
+            log.debug("running for " + user);
 
             String title = "RGD Update Report: " + format.format(from) + " - " + format.format(to);
 
@@ -234,7 +234,7 @@ public class NotificationManager {
             responseMsg.append("</td></tr></table>");
 
             if (!foundSomething) {
-                System.out.println("   didn't find anything");
+                log.info("   didn't find anything");
             } else {
                 // FOUND SOMETHING
 
@@ -246,7 +246,7 @@ public class NotificationManager {
                     if (u.isSendDigest()) {
                         this.send(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     }
-                    System.out.println("  adding to db");
+                    log.debug("  adding to db");
                     mdao.insertMessageCenter(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     Thread.sleep(1111); // wait at least 1sec to avoid primary key violations in DB
 
@@ -256,7 +256,7 @@ public class NotificationManager {
                     if (u.isSendDigest()) {
                         this.send(user, title, responseMsg.toString());
                     }
-                    System.out.println("  adding to db");
+                    log.debug("  adding to db");
                     mdao.insertMessageCenter(user, title, responseMsg.toString());
                 }
             }
@@ -607,8 +607,6 @@ public class NotificationManager {
 
 
     public static void send(String recipientEmail, String title, String message) throws Exception{
-
-        System.out.println("  sending message");
 
         // Get a Properties object
         Properties props = System.getProperties();
