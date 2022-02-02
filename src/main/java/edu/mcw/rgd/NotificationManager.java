@@ -249,7 +249,7 @@ public class NotificationManager {
                     if (u.isSendDigest()) {
                         this.send(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     }
-                    log.debug("  adding to db");
+                    log.info("  # adding to db");
                     mdao.insertMessageCenter(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     Thread.sleep(1111); // wait at least 1sec to avoid primary key violations in DB
 
@@ -259,7 +259,7 @@ public class NotificationManager {
                     if (u.isSendDigest()) {
                         this.send(user, title, responseMsg.toString());
                     }
-                    log.debug("  adding to db");
+                    log.info("  # adding to db");
                     mdao.insertMessageCenter(user, title, responseMsg.toString());
                 }
             }
