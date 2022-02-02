@@ -7,7 +7,8 @@ import edu.mcw.rgd.datamodel.ontology.Annotation;
 import edu.mcw.rgd.datamodel.ontologyx.Aspect;
 import edu.mcw.rgd.process.Utils;
 import edu.mcw.rgd.reporting.Link;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -27,7 +28,7 @@ import java.util.*;
  */
 public class NotificationManager {
 
-    Logger log = Logger.getLogger("updates");
+    Logger log = LogManager.getLogger("updates");
 
     // if not null, all messages will be sent only to this email account
     String debugEmail = null;
@@ -39,7 +40,7 @@ public class NotificationManager {
         for( String arg: args ) {
             if( arg.startsWith("debug=") ) {
                 manager.debugEmail = arg.substring(6);
-                System.out.println("DEBUG MODE! All emails will be sent to "+manager.debugEmail);
+                manager.log.warn("DEBUG MODE! All emails will be sent to "+manager.debugEmail);
             }
         }
 
@@ -79,7 +80,6 @@ public class NotificationManager {
             out.close();
 
         } catch(Exception e) {
-            e.printStackTrace();
             Utils.printStackTrace(e, manager.log);
         }
     }
@@ -93,9 +93,11 @@ public class NotificationManager {
         MyDAO mdao = new MyDAO();
         List<String> users = mdao.getAllWatchedUsers();
 
+        int usersWithNotifications = 0;
+
         for (String user: users) {
 
-            System.out.println("running for " + user);
+            log.info(user);
 
             String title = "RGD Update Report: " + format.format(from) + " - " + format.format(to);
 
@@ -234,9 +236,10 @@ public class NotificationManager {
             responseMsg.append("</td></tr></table>");
 
             if (!foundSomething) {
-                System.out.println("   didn't find anything");
+                log.info("   didn't find anything");
             } else {
                 // FOUND SOMETHING
+                usersWithNotifications++;
 
                 MyUser u =  mdao.getMyUser(user);
 
@@ -246,7 +249,7 @@ public class NotificationManager {
                     if (u.isSendDigest()) {
                         this.send(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     }
-                    System.out.println("  adding to db");
+                    log.info("  # adding to db");
                     mdao.insertMessageCenter(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     Thread.sleep(1111); // wait at least 1sec to avoid primary key violations in DB
 
@@ -256,13 +259,16 @@ public class NotificationManager {
                     if (u.isSendDigest()) {
                         this.send(user, title, responseMsg.toString());
                     }
-                    System.out.println("  adding to db");
+                    log.info("  # adding to db");
                     mdao.insertMessageCenter(user, title, responseMsg.toString());
                 }
             }
 
         }
 
+
+        log.info("===");
+        log.info(users.size()+" users processed; messages sent to "+usersWithNotifications+" users");
     }
 
     private String checkAnnotation(int rgdId, Date from, Date to, String aspect) throws Exception {
@@ -607,8 +613,6 @@ public class NotificationManager {
 
 
     public static void send(String recipientEmail, String title, String message) throws Exception{
-
-        System.out.println("  sending message");
 
         // Get a Properties object
         Properties props = System.getProperties();
