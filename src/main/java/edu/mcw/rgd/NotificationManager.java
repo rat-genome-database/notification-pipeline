@@ -95,7 +95,7 @@ public class NotificationManager {
 
         for (String user: users) {
 
-            log.debug("running for " + user);
+            log.info(user);
 
             String title = "RGD Update Report: " + format.format(from) + " - " + format.format(to);
 
