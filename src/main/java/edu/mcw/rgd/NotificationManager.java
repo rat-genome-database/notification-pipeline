@@ -93,6 +93,8 @@ public class NotificationManager {
         MyDAO mdao = new MyDAO();
         List<String> users = mdao.getAllWatchedUsers();
 
+        int usersWithNotifications = 0;
+
         for (String user: users) {
 
             log.info(user);
@@ -237,6 +239,7 @@ public class NotificationManager {
                 log.info("   didn't find anything");
             } else {
                 // FOUND SOMETHING
+                usersWithNotifications++;
 
                 MyUser u =  mdao.getMyUser(user);
 
@@ -263,6 +266,9 @@ public class NotificationManager {
 
         }
 
+
+        log.info("===");
+        log.info(users.size()+" users processed; messages sent to "+usersWithNotifications+" users");
     }
 
     private String checkAnnotation(int rgdId, Date from, Date to, String aspect) throws Exception {
