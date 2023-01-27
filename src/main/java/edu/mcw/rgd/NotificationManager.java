@@ -448,7 +448,7 @@ public class NotificationManager {
                 Reference r = rdao.getReferenceByPubmedId(id.getAccId());
 
                 if (r != null) {
-                    msg += "<tr><td colspan='3'><a  href='"+Link.ref(r.getRgdId())+"'>" + r.getTitle() + "</a> PMID:"+id.getAccId()+"</td></tr>";
+                    msg += "<tr><td colspan='3'><a  href='https://rgd.mcw.edu/"+Link.ref(r.getRgdId())+"'>" + r.getTitle() + "</a>, PMID:"+id.getAccId()+"</td></tr>";
                     msg += "<tr><td colspan='3'><div style='margin-bottom:5px;'>" + r.getCitation() + "</div></td></tr>";
 
                 }else {
