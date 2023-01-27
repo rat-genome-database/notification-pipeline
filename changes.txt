@@ -1,3 +1,7 @@
+Jan 27, 2023
+  updated build.gradle to be gradle 6.x + compatible
+  RGDD-2148: Reference links now go to RGD reference pages.
+  
 Jun 13, 2022
   tuned up logging
 
