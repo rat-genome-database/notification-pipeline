@@ -2,7 +2,7 @@
 
 . /etc/profile
 
-APP_HOME=/home/rgddata/pipelines/notificationPipeline
+APP_HOME=/home/rgddata/pipelines/notification-pipeline
 SERVER=`hostname -s | tr '[a-z]' '[A-Z]'`
 
 cd $APP_HOME

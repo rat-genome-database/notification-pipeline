@@ -1,3 +1,6 @@
+Apr 25, 2023
+  renamed distro to 'notification-pipeline'
+
 Jan 27, 2023
   updated build.gradle to be gradle 6.x + compatible
   RGDD-2148: Reference links now go to RGD reference pages.
