@@ -14,10 +14,7 @@ import javax.mail.Message;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -33,6 +30,8 @@ public class NotificationManager {
     // if not null, all messages will be sent only to this email account
     String debugEmail = null;
 
+    String footerHtml;
+
     public static void main(String[] args) throws Exception {
 
         NotificationManager manager = new NotificationManager();
@@ -43,6 +42,7 @@ public class NotificationManager {
                 manager.log.warn("DEBUG MODE! All emails will be sent to "+manager.debugEmail);
             }
         }
+
 
         try {
 
@@ -85,6 +85,8 @@ public class NotificationManager {
     }
 
     public void run(Date from, Date to) throws Exception {
+
+        loadHtmlForFooter();
 
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -225,15 +227,7 @@ public class NotificationManager {
 
             }
 
-            responseMsg.append("<br><br><table align='center'><tr><td align='center'>");
-            responseMsg.append("<div id=\"copyright\">\n" +
-                    "\t<p>&copy; <a href=\"http://www.mcw.edu/bioinformatics.htm\">Bioinformatics Program, HMGC</a> at the <a href=\"http://www.mcw.edu/\">Medical\n" +
-                    "        College of Wisconsin</a></p>\n" +
-                    "\t<p align=\"center\">RGD is funded by grant HL64541 from the National Heart, Lung, and Blood Institute on behalf of the NIH.<br><img src=\"http://rgd.mcw.edu/common/images/nhlbilogo.gif\" alt=\"NHLBI Logo\" title=\"National Heart Lung and Blood Institute logo\">\n");
-
-            responseMsg.append("<br>Click <a href='https://rgd.mcw.edu/rgdweb/my/login.html'>here</a> to unsubscribe");
-
-            responseMsg.append("</td></tr></table>");
+            responseMsg.append(footerHtml);
 
             if (!foundSomething) {
                 log.info("   didn't find anything");
@@ -269,6 +263,28 @@ public class NotificationManager {
 
         log.info("===");
         log.info(users.size()+" users processed; messages sent to "+usersWithNotifications+" users");
+    }
+
+    // load HTML for email footer
+    void loadHtmlForFooter() {
+
+        if( footerHtml==null ) {
+
+            try {
+                footerHtml = Utils.readFileAsString("properties/footer.html");
+
+            } catch( IOException e) {
+                // default footer: cannot load from file
+                footerHtml  = "<br><br><table align='center'><tr><td align='center'>\n";
+                footerHtml +="<div id=\"copyright\">\n" +
+                        "\t<p>&copy; <a href=\"http://www.mcw.edu/bioinformatics.htm\">Bioinformatics Program, HMGC</a> at the <a href=\"http://www.mcw.edu/\">Medical\n" +
+                        "        College of Wisconsin</a></p>\n" +
+                        "\t<p align=\"center\">RGD is funded by grant HL64541 from the National Heart, Lung, and Blood Institute on behalf of the NIH.<br><img src=\"http://rgd.mcw.edu/common/images/nhlbilogo.gif\" alt=\"NHLBI Logo\" title=\"National Heart Lung and Blood Institute logo\">\n";
+
+                footerHtml += "<br>Click <a href='https://rgd.mcw.edu/rgdweb/my/login.html'>here</a> to unsubscribe\n";
+                footerHtml += "</td></tr></table>\n";
+            }
+        }
     }
 
     private String checkAnnotation(int rgdId, Date from, Date to, String aspect) throws Exception {

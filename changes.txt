@@ -1,3 +1,6 @@
+Jul 10, 2023
+  implemented custom footer for email messages
+
 May 02, 2023
   renamed git branch 'master' to 'main'
 
