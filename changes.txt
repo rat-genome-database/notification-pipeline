@@ -1,3 +1,6 @@
+Jan 30, 2024
+  updated to java 17
+
 Jul 10, 2023
   implemented custom footer for email messages
 
