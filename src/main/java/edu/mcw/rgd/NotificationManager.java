@@ -119,8 +119,7 @@ public class NotificationManager {
             responseMsg.append("<li>Do nothing.  Your notification will continue to be sent even if you do not update your account.   You will not be able to add new notification or modify existing ones.</li>");
             responseMsg.append("</ol>");
             responseMsg.append("<br>If you have question, RGD can be contacted by way of the <a href='http://localhost:8080/rgdweb/contact/contactus.html'>RGD Contact Page</a>");
-
-
+            
             boolean foundSomething =false;
             List<WatchedObject> wos = mdao.getWatchedObjects(user);
 
