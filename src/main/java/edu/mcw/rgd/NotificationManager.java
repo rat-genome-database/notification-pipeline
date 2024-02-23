@@ -60,11 +60,8 @@ public class NotificationManager {
 
             if (properties.containsKey("last.run") && properties.getProperty("last.run").length() > 1) {
 
-                gcFrom.add(Calendar.DAY_OF_YEAR, -7);
-//                Date d = sdf.parse(properties.getProperty("last.run"));
- //               gcFrom.setTime(d);
-
-
+                Date d = sdf.parse(properties.getProperty("last.run"));
+                gcFrom.setTime(d);
             }else {
                 gcFrom.add(Calendar.DAY_OF_YEAR, -7);
             }
