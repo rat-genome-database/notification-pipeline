@@ -243,7 +243,7 @@ public class NotificationManager {
             responseMsg.append(footerHtml);
 
             if (!foundSomething) {
-                log.info("   didn't find anything");
+                log.info("   didn't find anything.");
             } else {
                 // FOUND SOMETHING
                 usersWithNotifications++;
