@@ -87,7 +87,6 @@ public class NotificationManager {
 
     public void run(Date from, Date to) throws Exception {
 
-        log.info("Running notification pipeline for " + from + " to " + to);
 
         loadHtmlForFooter();
 
@@ -106,6 +105,7 @@ public class NotificationManager {
 
             String title = "RGD Update Report: " + format.format(from) + " - " + format.format(to);
 
+            log.info(title);
             StringBuffer responseMsg = new StringBuffer();
 
             responseMsg.append("<div style='font-weight:700; font-size:26'>" + title +  "</div>");
