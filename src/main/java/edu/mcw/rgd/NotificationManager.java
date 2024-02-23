@@ -87,6 +87,8 @@ public class NotificationManager {
 
     public void run(Date from, Date to) throws Exception {
 
+        System.out.println("Running notification pipeline for " + from + " to " + to);
+
         loadHtmlForFooter();
 
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
