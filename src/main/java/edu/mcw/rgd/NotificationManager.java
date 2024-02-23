@@ -62,11 +62,8 @@ public class NotificationManager {
 
                 Date d = sdf.parse(properties.getProperty("last.run"));
                 gcFrom.setTime(d);
-
-
             }else {
                 gcFrom.add(Calendar.DAY_OF_YEAR, -7);
-                //gcFrom.add(Calendar.DAY_OF_YEAR, -765);
             }
 
             manager.run(gcFrom.getTime(), gcTo.getTime());
@@ -87,6 +84,7 @@ public class NotificationManager {
 
     public void run(Date from, Date to) throws Exception {
 
+
         loadHtmlForFooter();
 
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
@@ -104,6 +102,7 @@ public class NotificationManager {
 
             String title = "RGD Update Report: " + format.format(from) + " - " + format.format(to);
 
+            log.info(title);
             StringBuffer responseMsg = new StringBuffer();
 
             responseMsg.append("<div style='font-weight:700; font-size:26'>" + title +  "</div>");
@@ -241,7 +240,7 @@ public class NotificationManager {
             responseMsg.append(footerHtml);
 
             if (!foundSomething) {
-                log.info("   didn't find anything");
+                log.info("   didn't find anything.");
             } else {
                 // FOUND SOMETHING
                 usersWithNotifications++;
