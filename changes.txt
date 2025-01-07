@@ -1,3 +1,6 @@
+Jan 07, 2025
+  updated to commons-dbcp2
+
 Jan 30, 2024
   updated to java 17
 
