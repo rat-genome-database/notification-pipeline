@@ -9,7 +9,6 @@ import edu.mcw.rgd.process.Utils;
 import edu.mcw.rgd.reporting.Link;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -79,6 +78,7 @@ public class NotificationManager {
 
         } catch(Exception e) {
             Utils.printStackTrace(e, manager.log);
+            throw e;
         }
     }
 
