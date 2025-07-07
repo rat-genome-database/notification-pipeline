@@ -286,15 +286,33 @@ public class NotificationManager {
             } catch( IOException e) {
                 // default footer: cannot load from file
                 footerHtml = """
-                <br><br><table align='center'><tr><td align='center'>
-                <div id="copyright">
-                    "<p>&copy; <a href="http://www.mcw.edu/bioinformatics.htm">Bioinformatics Program, HMGC</a>
-                     at the <a href="http://www.mcw.edu/">Medical College of Wisconsin</a></p>
-                     <p align="center">RGD is funded by grant HL64541 from the National Heart, Lung, and Blood Institute on behalf of the NIH.<br>
-                     <img src="http://rgd.mcw.edu/common/images/nhlbilogo.gif" alt="NHLBI Logo" title="National Heart Lung and Blood Institute logo">
-                <br>Click <a href='https://rgd.mcw.edu/rgdweb/my/login.html'>here</a> to unsubscribe
-                </td></tr></table>
-                """;
+                    <footer id="footer">
+                        <div style="text-align:center; background-color: #2865A3; padding-bottom: 3px; padding-top:3px; margin-top:15px">
+                            <a style="color:white; text-decoration:none" onmouseover="style='text-decoration:underline;color:white'" onmouseout="style='text-decoration:none;color:white'"
+                               href="https://rgd.mcw.edu/rgdweb/contact/contactus.html">Contact Us</a>&nbsp;|&nbsp;
+                            <a style="color:white; text-decoration:none" onmouseover="style='text-decoration:underline;color:white'" onmouseout="style='text-decoration:none;color:white'"
+                               href="https://rgd.mcw.edu/wg/about-us">About Us</a>&nbsp;|&nbsp;
+                            <a style="color:white; text-decoration:none" onmouseover="style='text-decoration:underline;color:white'" onmouseout="style='text-decoration:none;color:white'"
+                               href="https://creativecommons.org/licenses/by/4.0/">License CC BY 4.0</a>&nbsp;|&nbsp;
+                            <a style="color:white; text-decoration:none" onmouseover="style='text-decoration:underline;color:white'" onmouseout="style='text-decoration:none;color:white'"
+                               href="https://rgd.mcw.edu/wg/home/disclaimer">Legal Disclaimer</a>&nbsp;|&nbsp;
+                            <a style="color:white; text-decoration:none" onmouseover="style='text-decoration:underline;color:white'" onmouseout="style='text-decoration:none;color:white'"
+                               href="https://www.mcw.edu/">&copy; Medical College of Wisconsin</a>
+                        </div>
+                    
+                        <table align="center">
+                            <tbody><tr>
+                                <td width="100" align="center"><a href="https://www.nhlbi.nih.gov/"><img src="https://rgd.mcw.edu/rgdweb/common/images/nhlbilogo.gif" alt="NHLBI Logo" title="National Heart Lung and Blood Institute"></a><br><br></td>
+                                <td width="100" align="center"><a href="https://www.nih.gov/"><img src="https://rgd.mcw.edu/rgdweb/common/images/nih.png" alt="NHLBI Logo" title="National Institute of Health"></a><br><br></td>
+                                <td width="100" align="center"><a href="https://alliancegenome.org"><img src="https://rgd.mcw.edu/rgdweb/common/images/alliance_logo.png" title="Alliance of Genome Resources" height="80" width="133" border="0/"></a></td>
+                            </tr>
+                        </tbody></table>
+                    
+                        <p align="center">RGD is funded by grant HL64541 from the National Heart, Lung, and Blood Institute on behalf of the NIH.</p>
+                    
+                        <p align="center">Click <a href='https://rgd.mcw.edu/rgdweb/my/login.html'>here</a> to unsubscribe</p>
+                    </footer>
+                    """;
             }
         }
     }
