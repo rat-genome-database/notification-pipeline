@@ -285,14 +285,16 @@ public class NotificationManager {
 
             } catch( IOException e) {
                 // default footer: cannot load from file
-                footerHtml  = "<br><br><table align='center'><tr><td align='center'>\n";
-                footerHtml +="<div id=\"copyright\">\n" +
-                        "\t<p>&copy; <a href=\"http://www.mcw.edu/bioinformatics.htm\">Bioinformatics Program, HMGC</a> at the <a href=\"http://www.mcw.edu/\">Medical\n" +
-                        "        College of Wisconsin</a></p>\n" +
-                        "\t<p align=\"center\">RGD is funded by grant HL64541 from the National Heart, Lung, and Blood Institute on behalf of the NIH.<br><img src=\"http://rgd.mcw.edu/common/images/nhlbilogo.gif\" alt=\"NHLBI Logo\" title=\"National Heart Lung and Blood Institute logo\">\n";
-
-                footerHtml += "<br>Click <a href='https://rgd.mcw.edu/rgdweb/my/login.html'>here</a> to unsubscribe\n";
-                footerHtml += "</td></tr></table>\n";
+                footerHtml = """
+                <br><br><table align='center'><tr><td align='center'>
+                <div id="copyright">
+                    "<p>&copy; <a href="http://www.mcw.edu/bioinformatics.htm">Bioinformatics Program, HMGC</a>
+                     at the <a href="http://www.mcw.edu/">Medical College of Wisconsin</a></p>
+                     <p align="center">RGD is funded by grant HL64541 from the National Heart, Lung, and Blood Institute on behalf of the NIH.<br>
+                     <img src="http://rgd.mcw.edu/common/images/nhlbilogo.gif" alt="NHLBI Logo" title="National Heart Lung and Blood Institute logo">
+                <br>Click <a href='https://rgd.mcw.edu/rgdweb/my/login.html'>here</a> to unsubscribe
+                </td></tr></table>
+                """;
             }
         }
     }
