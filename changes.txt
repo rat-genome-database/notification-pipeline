@@ -1,3 +1,6 @@
+Oct 06, 2025
+  refactored code for better readability
+
 Jul 07, 2025
   updated content of default footer
 
