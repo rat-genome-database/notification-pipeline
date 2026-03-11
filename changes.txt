@@ -1,3 +1,9 @@
+Mar 11, 2026
+  added Spring IoC to load version from AppConfigure.xml and display it at startup
+
+Nov 11, 2025
+  updated dependencies
+
 Oct 06, 2025
   refactored code for better readability
 

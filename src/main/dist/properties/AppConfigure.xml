@@ -1,7 +1,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-    <!-- TO DO -->
+    <bean id="manager" class="edu.mcw.rgd.NotificationManager">
+        <property name="version" value="notification-pipeline  -- build Mar 11, 2026" />
+    </bean>
 </beans>
-
-
