@@ -9,6 +9,9 @@ import edu.mcw.rgd.process.Utils;
 import edu.mcw.rgd.reporting.Link;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.core.io.FileSystemResource;
 
 import javax.mail.Message;
 import javax.mail.Session;
@@ -27,6 +30,8 @@ public class NotificationManager {
 
     Logger log = LogManager.getLogger("updates");
 
+    private String version;
+
     // if not null, all messages will be sent only to this email account
     String debugEmail = null;
 
@@ -34,7 +39,9 @@ public class NotificationManager {
 
     public static void main(String[] args) throws Exception {
 
-        NotificationManager manager = new NotificationManager();
+        DefaultListableBeanFactory bf = new DefaultListableBeanFactory();
+        new XmlBeanDefinitionReader(bf).loadBeanDefinitions(new FileSystemResource("properties/AppConfigure.xml"));
+        NotificationManager manager = (NotificationManager) (bf.getBean("manager"));
 
         for( String arg: args ) {
             if( arg.startsWith("debug=") ) {
@@ -84,6 +91,7 @@ public class NotificationManager {
 
     public void run(Date from, Date to) throws Exception {
 
+        log.info(getVersion());
 
         loadHtmlForFooter();
 
@@ -664,6 +672,14 @@ public class NotificationManager {
         return msg;
     }
 
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getVersion() {
+        return version;
+    }
 
     public static void send(String recipientEmail, String title, String message) throws Exception{
 
