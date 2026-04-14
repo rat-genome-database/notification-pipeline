@@ -1,3 +1,6 @@
+Apr 14, 2026
+  added MemoryMonitor; updated dependencies
+
 Mar 11, 2026
   added Spring IoC to load version from AppConfigure.xml and display it at startup
 
