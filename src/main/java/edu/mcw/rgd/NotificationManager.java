@@ -5,6 +5,7 @@ import edu.mcw.rgd.datamodel.*;
 import edu.mcw.rgd.datamodel.myrgd.MyUser;
 import edu.mcw.rgd.datamodel.ontology.Annotation;
 import edu.mcw.rgd.datamodel.ontologyx.Aspect;
+import edu.mcw.rgd.process.MemoryMonitor;
 import edu.mcw.rgd.process.Utils;
 import edu.mcw.rgd.reporting.Link;
 import org.apache.logging.log4j.LogManager;
@@ -90,6 +91,9 @@ public class NotificationManager {
     }
 
     public void run(Date from, Date to) throws Exception {
+
+        MemoryMonitor memoryMonitor = new MemoryMonitor();
+        memoryMonitor.start();
 
         log.info(getVersion());
 
@@ -288,6 +292,9 @@ public class NotificationManager {
 
         log.info("===");
         log.info(users.size()+" users processed; messages sent to "+usersWithNotifications+" users");
+
+        memoryMonitor.stop();
+        log.info(memoryMonitor.getSummary());
     }
 
     // load HTML for email footer
