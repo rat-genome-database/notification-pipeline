@@ -120,7 +120,7 @@ public class NotificationManager {
             responseMsg.append("<div style='font-weight:700; font-size:26'>" + title +  "</div>");
             String s = """
                 <table><tr>
-                <td><img style='padding-right:40px' src='http://rgd.mcw.edu/common/images/rgd_LOGO_blue_rgd.gif' border='0'/></td>
+                <td><img style='padding-right:40px' src='https://rgd.mcw.edu/common/images/rgd_LOGO_blue_rgd.gif' border='0'/></td>
                 </tr></table>
     
                 <div style='border:1px solid black;padding:10px;'>
@@ -134,7 +134,7 @@ public class NotificationManager {
                 <li>Do nothing.  Your notification will continue to be sent even if you do not update your account.
                     You will not be able to add new notification or modify existing ones.</li>
                 </ol>
-                <br>If you have question, RGD can be contacted by way of the <a href='http://localhost:8080/rgdweb/contact/contactus.html'>RGD Contact Page</a>
+                <br>If you have question, RGD can be contacted by way of the <a href='https://rgd.mcw.edu/rgdweb/contact/contactus.html'>RGD Contact Page</a>
                 </div>
                 """;
             responseMsg.append(s);
@@ -199,7 +199,7 @@ public class NotificationManager {
                 if (localMsg.length() > 10) {
                     foundSomething=true;
 
-                    responseMsg.append("<div style='background-color:#cccccc; margin-top:20px'><span style='font-size:20px;font-weight:700;padding:10px;'>" + g.getSymbol() + "</span> has been updated (<a href='http://rgd.mcw.edu/" + Link.it(wo.getRgdId())  +"'>RGD:" + wo.getRgdId() + "</a>)</div>");
+                    responseMsg.append("<div style='background-color:#cccccc; margin-top:20px'><span style='font-size:20px;font-weight:700;padding:10px;'>" + g.getSymbol() + "</span> has been updated (<a href='https://rgd.mcw.edu/" + Link.it(wo.getRgdId())  +"'>RGD:" + wo.getRgdId() + "</a>)</div>");
                     responseMsg.append("<table style='margin-left:20px;' border='0'>");
                     responseMsg.append(localMsg);
                     responseMsg.append("</table>");
@@ -246,7 +246,7 @@ public class NotificationManager {
                 if (localMsg.length() > 10) {
                     foundSomething=true;
 
-                    responseMsg.append("<div style='background-color:#cccccc; margin-top:20px; padding:10px;'><span style='font-size:20px;font-weight:700;'>" + xdao.getTerm(wt.getAccId()).getTerm() + "</span> (<a href='http://rgd.mcw.edu/" + Link.ontView(wt.getAccId())  +"'>" + wt.getAccId() + "</a>)</div>");
+                    responseMsg.append("<div style='background-color:#cccccc; margin-top:20px; padding:10px;'><span style='font-size:20px;font-weight:700;'>" + xdao.getTerm(wt.getAccId()).getTerm() + "</span> (<a href='https://rgd.mcw.edu/" + Link.ontView(wt.getAccId())  +"'>" + wt.getAccId() + "</a>)</div>");
                     responseMsg.append("<table style='margin-left:20px;'>");
                     responseMsg.append(localMsg);
                     responseMsg.append("</table>");
@@ -357,7 +357,7 @@ public class NotificationManager {
                     distinct.put(annot.getObjectSymbol() + "-" +annot.getTerm() + "-" + annot.getEvidence(), null);
                 }
 
-                msg += "<tr><td>" + annot.getTerm()+ "</td><td><a href='http://rgd.mcw.edu/rgdweb/report/annotation/main.html?term=" + annot.getTermAcc() + "&id=" + rgdId + "'>" + annot.getTermAcc() + "</a></td><td><span style='padding-left:10px;'>" +  annot.getEvidence() + "</span></td></tr>";
+                msg += "<tr><td>" + annot.getTerm()+ "</td><td><a href='https://rgd.mcw.edu/rgdweb/report/annotation/main.html?term=" + annot.getTermAcc() + "&id=" + rgdId + "'>" + annot.getTermAcc() + "</a></td><td><span style='padding-left:10px;'>" +  annot.getEvidence() + "</span></td></tr>";
             }
         }
 
@@ -520,7 +520,7 @@ public class NotificationManager {
                     msg += "<tr><td colspan='3'><div style='margin-bottom:5px;'>" + r.getCitation() + "</div></td></tr>";
 
                 }else {
-                    msg += "<tr><td colspan='3'><div style='margin-bottom:5px;'>PubMed:<a href='http://www.ncbi.nlm.nih.gov/pubmed/" + id.getAccId() + "'>" + id.getAccId() + "</a></div></td></tr>";
+                    msg += "<tr><td colspan='3'><div style='margin-bottom:5px;'>PubMed:<a href='https://www.ncbi.nlm.nih.gov/pubmed/" + id.getAccId() + "'>" + id.getAccId() + "</a></div></td></tr>";
                 }
             }
 
@@ -553,7 +553,7 @@ public class NotificationManager {
                 //msg +="<td>" + annot.getTerm() + "</td>";
                 msg +="<td>" + annot.getObjectSymbol() + "</td>";
                 msg +="<td>" + annot.getTerm() + "</td>";
-                msg +="<td><a href='http://rgd.mcw.edu" + Link.it(annot.getAnnotatedObjectRgdId()) + "'>RGD:" + annot.getAnnotatedObjectRgdId() + "</a></td>";
+                msg +="<td><a href='https://rgd.mcw.edu" + Link.it(annot.getAnnotatedObjectRgdId()) + "'>RGD:" + annot.getAnnotatedObjectRgdId() + "</a></td>";
                 msg +="<td><span style='padding-left:10px;'>" + annot.getEvidence() + "</span></td>";
                 msg += "</tr>";
 
@@ -589,7 +589,7 @@ public class NotificationManager {
                 //msg +="<td>" + annot.getTerm() + "</td>";
                 msg +="<td>" + annot.getObjectSymbol() + "</td>";
                 msg +="<td>" + annot.getTerm() + "</td>";
-                msg +="<td><a href='http://rgd.mcw.edu" + Link.it(annot.getAnnotatedObjectRgdId()) + "'>RGD:" + annot.getAnnotatedObjectRgdId() + "</a></td>";
+                msg +="<td><a href='https://rgd.mcw.edu" + Link.it(annot.getAnnotatedObjectRgdId()) + "'>RGD:" + annot.getAnnotatedObjectRgdId() + "</a></td>";
                 msg +="<td><span style='padding-left:10px;'>" + annot.getEvidence() + "</span></td>";
 
                 msg += "</tr>";
@@ -630,7 +630,7 @@ public class NotificationManager {
                 //msg +="<td>" + annot.getTerm() + "</td>";
                 msg +="<td>" + annot.getObjectSymbol() + "</td>";
                 msg +="<td>" + annot.getTerm() + "</td>";
-                msg +="<td><a href='http://rgd.mcw.edu" + Link.it(annot.getAnnotatedObjectRgdId()) + "'>RGD:" + annot.getAnnotatedObjectRgdId() + "</a></td>";
+                msg +="<td><a href='https://rgd.mcw.edu" + Link.it(annot.getAnnotatedObjectRgdId()) + "'>RGD:" + annot.getAnnotatedObjectRgdId() + "</a></td>";
                 msg +="<td><span style='padding-left:10px;'>" + annot.getEvidence() + "</span></td>";
 
                 msg += "</tr>";
@@ -666,7 +666,7 @@ public class NotificationManager {
                 //msg +="<td>" + annot.getTerm() + "</td>";
                 msg +="<td>" + annot.getObjectName() + "</td>";
                 msg +="<td>" + annot.getTerm() + "</td>";
-                msg +="<td><a href='http://rgd.mcw.edu" + Link.it(annot.getAnnotatedObjectRgdId()) + "'>RGD:" + annot.getAnnotatedObjectRgdId() + "</a></td>";
+                msg +="<td><a href='https://rgd.mcw.edu" + Link.it(annot.getAnnotatedObjectRgdId()) + "'>RGD:" + annot.getAnnotatedObjectRgdId() + "</a></td>";
                 msg +="<td><span style='padding-left:10px;'>" + annot.getEvidence() + "</span></td>";
 
                 msg += "</tr>";

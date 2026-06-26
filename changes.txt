@@ -1,3 +1,6 @@
+Jun 26, 2026
+  fixed broken contact link and switched email links to https; updated dependencies
+
 Apr 14, 2026
   added MemoryMonitor; updated dependencies
 
