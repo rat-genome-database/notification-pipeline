@@ -108,13 +108,11 @@ public class NotificationManager {
 
         int usersWithNotifications = 0;
 
+        String title = "RGD Update Report: " + format.format(from) + " - " + format.format(to);
+        log.info(title);
+
         for (String user: users) {
 
-            log.info(user);
-
-            String title = "RGD Update Report: " + format.format(from) + " - " + format.format(to);
-
-            log.info(title);
             StringBuffer responseMsg = new StringBuffer();
 
             responseMsg.append("<div style='font-weight:700; font-size:26'>" + title +  "</div>");
@@ -259,12 +257,14 @@ public class NotificationManager {
             responseMsg.append(footerHtml);
 
             if (!foundSomething) {
-                log.info("   didn't find anything.");
+                // users without updates are logged only to updates.log
+                log.debug("  "+user+": no updates");
             } else {
                 // FOUND SOMETHING
                 usersWithNotifications++;
 
                 MyUser u =  mdao.getMyUser(user);
+                log.info("  "+user+": "+(u.isSendDigest() ? "emailed and added to message center" : "added to message center (email digest off)"));
 
                 if( debugEmail!=null ) {
 
@@ -272,7 +272,6 @@ public class NotificationManager {
                     if (u.isSendDigest()) {
                         this.send(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     }
-                    log.info("  # adding to db");
                     mdao.insertMessageCenter(debugEmail, "DEBUG for "+user+" "+title, responseMsg.toString());
                     Thread.sleep(1111); // wait at least 1sec to avoid primary key violations in DB
 
@@ -282,7 +281,6 @@ public class NotificationManager {
                     if (u.isSendDigest()) {
                         this.send(user, title, responseMsg.toString());
                     }
-                    log.info("  # adding to db");
                     mdao.insertMessageCenter(user, title, responseMsg.toString());
                 }
             }

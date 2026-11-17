@@ -1,3 +1,6 @@
+Nov 17, 2026
+  run report: one line per notified user; users without updates logged only to updates.log; updated dependencies
+
 Oct 20, 2026
   migrated to postgres; updated dependencies
 
