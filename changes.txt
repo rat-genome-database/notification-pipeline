@@ -1,3 +1,6 @@
+Nov 17, 2026
+  run report: one line per notified user; users without updates logged only to updates.log; updated dependencies
+
 Jun 26, 2026
   fixed broken contact link and switched email links to https; updated dependencies
 
